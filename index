@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RNGCORE Shop - Sklep Minecraft</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        :root {
+          --bg: #05060b;
+          --bg2: #090811;
+          --card: rgba(10, 11, 18, .86);
+          --card2: rgba(18, 13, 28, .78);
+          --line: rgba(179, 85, 255, .24);
+          --line2: rgba(255,255,255,.10);
+          --purple: #9b35ff;
+          --purple2: #6d18ff;
+          --purple3: #c989ff;
+          --text: #ffffff;
+          --muted: #9690a4;
+          --green: #00e65f;
+        }
+
+        body {
+          min-height: 100vh;
+          background:
+            radial-gradient(circle at 18% 18%, rgba(139, 33, 255, .22), transparent 24%),
+            radial-gradient(circle at 78% 20%, rgba(105, 0, 255, .14), transparent 26%),
+            radial-gradient(circle at 50% 100%, rgba(79, 16, 140, .16), transparent 35%),
+            linear-gradient(180deg, #05060b 0%, #020308 100%);
+          color: var(--text);
+          overflow-x: hidden;
+        }
+
+        body::before {
+          content: "";
+          position: fixed;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+          background-size: 42px 42px;
+          mask-image: linear-gradient(to bottom, #000, transparent 85%);
+          pointer-events: none;
+        }
+
+        body::after {
+          content: "";
+          position: fixed;
+          inset: 0;
+          background: radial-gradient(circle, rgba(158, 70, 255, .7) 0 1px, transparent 2px);
+          background-size: 120px 120px;
+          opacity: .18;
+          pointer-events: none;
+          animation: stars 10s linear infinite;
+        }
+
+        @keyframes stars {
+          from { transform: translateY(0); }
+          to { transform: translateY(120px); }
+        }
+
+        .container {
+          width: min(1200px, 92%);
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        }
+
+        header {
+          height: 88px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .logo {
+          font-size: 31px;
+          line-height: .82;
+          font-weight: 1000;
+          letter-spacing: 1px;
+          color: #fff;
+          text-shadow: 0 0 20px rgba(155, 53, 255, .65);
+        }
+
+        .logo b {
+          color: var(--purple);
+        }
+
+        .logo span {
+          display: block;
+          color: var(--purple3);
+          font-size: 16px;
+          margin-left: 38px;
+          letter-spacing: 2px;
+        }
+
+        nav {
+          display: flex;
+          align-items: center;
+          gap: 34px;
+        }
+
+        nav a {
+          color: #d8d2e5;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 900;
+          letter-spacing: .7px;
+          padding: 35px 0;
+          border-bottom: 2px solid transparent;
+          transition: .2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+          color: var(--purple3);
+          border-color: var(--purple);
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+
+        .online-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          border: 1px solid rgba(255,255,255,.12);
+          background: rgba(0,0,0,.28);
+          border-radius: 8px;
+          padding: 14px 22px;
+          color: #fff;
+          font-weight: 900;
+          font-size: 14px;
+        }
+
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--green);
+          box-shadow: 0 0 14px rgba(0, 230, 95, .9);
+        }
+
+        .login-btn {
+          border: 1px solid var(--purple);
+          border-radius: 8px;
+          padding: 15px 35px;
+          color: #fff;
+          text-decoration: none;
+          font-weight: 1000;
+          background: rgba(155, 53, 255, .05);
+          box-shadow: inset 0 0 18px rgba(155, 53, 255, .08);
+          transition: .2s;
+        }
+
+        .login-btn:hover {
+          background: var(--purple);
+          box-shadow: 0 0 28px rgba(155, 53, 255, .55);
+        }
+
+        .hero {
+          margin-top: 40px;
+          display: grid;
+          grid-template-columns: 1.08fr .9fr;
+          gap: 24px;
+        }
+
+        .card {
+          position: relative;
+          background: linear-gradient(180deg, rgba(17, 18, 26, .92), rgba(6, 7, 12, .9));
+          border: 1px solid rgba(255,255,255,.14);
+          border-radius: 12px;
+          box-shadow: 0 25px 80px rgba(0,0,0,.50), inset 0 0 35px rgba(155, 53, 255, .04);
+          overflow: hidden;
+        }
+
+        .card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(135deg, rgba(155, 53, 255, .23), transparent 35%, rgba(155, 53, 255, .10));
+          opacity: .45;
+          pointer-events: none;
+        }
+
+        .promo {
+          min-height: 560px;
+          padding: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .promo-bg {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 50% 75%, rgba(123, 31, 255, .38), transparent 36%),
+            linear-gradient(to top, #05050a 0%, transparent 55%),
+            url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1300&q=80');
+          background-size: cover;
+          background-position: center;
+          opacity: .34;
+          filter: contrast(1.25) saturate(.7);
+        }
+
+        .promo-content {
+          position: relative;
+          z-index: 2;
+        }
+
+        .server-online {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 13px 24px;
+          border-radius: 9px;
+          border: 1px solid rgba(255,255,255,.18);
+          background: rgba(0,0,0,.38);
+          margin-bottom: 24px;
+          font-weight: 900;
+          color: #ddd5eb;
+        }
+
+        .server-online .dot {
+          background: var(--purple);
+          box-shadow: 0 0 16px rgba(155, 53, 255, .95);
+        }
+
+        .promo h1 {
+          font-size: 62px;
+          font-weight: 1000;
+          letter-spacing: -2px;
+          color: #fff;
+          text-shadow: 0 0 26px rgba(155, 53, 255, .55);
+        }
+
+        .promo h1 span {
+          color: var(--purple);
+        }
+
+        .promo p {
+          margin-top: 8px;
+          font-size: 19px;
+          font-weight: 1000;
+          color: var(--purple3);
+          text-shadow: 0 0 22px rgba(155, 53, 255, .65);
+        }
+
+        .character {
+          width: 260px;
+          height: 250px;
+          margin: 34px auto 8px;
+          position: relative;
+        }
+
+        .aura {
+          position: absolute;
+          left: 50%;
+          bottom: 8px;
+          transform: translateX(-50%);
+          width: 250px;
+          height: 130px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(155,53,255,.45), transparent 65%);
+          filter: blur(8px);
+          animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+          from { opacity: .55; transform: translateX(-50%) scale(.95); }
+          to { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        .mc-skin {
+          position: absolute;
+          left: 50%;
+          top: 6px;
+          transform: translateX(-50%);
+          width: 145px;
+          height: 220px;
+        }
+
+        .crown {
+          width: 116px;
+          height: 42px;
+          background: linear-gradient(180deg, #c989ff, #5a12c8);
+          margin: 0 auto -7px;
+          clip-path: polygon(0 100%,0 35%,18% 55%,32% 0,50% 58%,68% 0,82% 55%,100% 35%,100% 100%);
+          box-shadow: 0 0 20px rgba(155, 53, 255, .7);
+        }
+
+        .head {
+          width: 90px;
+          height: 90px;
+          background: #b98268;
+          border: 5px solid #18101d;
+          margin: 0 auto;
+          box-shadow: inset -13px -12px rgba(0,0,0,.28), 0 0 20px rgba(155, 53, 255, .25);
+          position: relative;
+        }
+
+        .hair {
+          position: absolute;
+          inset: 0 0 auto 0;
+          height: 28px;
+          background: #101014;
+        }
+
+        .eye {
+          position: absolute;
+          top: 42px;
+          width: 10px;
+          height: 10px;
+          background: #5f13dd;
+          box-shadow: 0 0 8px #9b35ff;
+        }
+
+        .eye.left { left: 22px; }
+        .eye.right { right: 22px; }
+
+        .body-mc {
+          width: 110px;
+          height: 96px;
+          margin: -1px auto 0;
+          background: linear-gradient(135deg, #12131b, #4a168e);
+          border: 5px solid #18101d;
+          box-shadow: inset -13px -12px rgba(0,0,0,.35);
+        }
+
+        .sword {
+          position: absolute;
+          width: 24px;
+          height: 158px;
+          background: linear-gradient(90deg, #e3c5ff, #7d25ff 45%, #381080);
+          right: -6px;
+          top: 78px;
+          transform: rotate(42deg);
+          border: 3px solid #20102f;
+          box-shadow: 0 0 20px rgba(155, 53, 255, .75);
+        }
+
+        .copy-btn {
+          margin-top: 12px;
+          border: 0;
+          border-radius: 10px;
+          padding: 20px 70px;
+          color: #fff;
+          font-size: 16px;
+          font-weight: 1000;
+          background: linear-gradient(180deg, #a044ff, #6918df);
+          box-shadow: 0 0 28px rgba(155, 53, 255, .55), inset 0 0 18px rgba(255,255,255,.14);
+          cursor: pointer;
+          transition: .2s;
+        }
+
+        .copy-btn:hover {
+          transform: translateY(-2px);
+          filter: brightness(1.12);
+        }
+
+        .server-ip {
+          margin-top: 18px;
+          color: #aaa3b8;
+          font-weight: 800;
+        }
+
+        .server-ip span { color: var(--purple3); }
+
+        .topup {
+          padding: 38px 34px 28px;
+        }
+
+        .topup-inner {
+          position: relative;
+          z-index: 2;
+        }
+
+        .topup h2 {
+          text-align: center;
+          font-size: 28px;
+          font-weight: 1000;
+          margin-bottom: 8px;
+          text-shadow: 0 0 18px rgba(155, 53, 255, .45);
+        }
+
+        .topup .sub {
+          text-align: center;
+          color: #aaa3b8;
+          font-size: 16px;
+          margin-bottom: 32px;
+        }
+
+        .prices {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 14px;
+        }
+
+        .price {
+          height: 135px;
+          border: 1px solid rgba(255,255,255,.12);
+          border-radius: 10px;
+          background: rgba(0,0,0,.25);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: .2s;
+        }
+
+        .price:hover,
+        .price.active {
+          border-color: var(--purple);
+          box-shadow: 0 0 25px rgba(155, 53, 255, .24), inset 0 0 0 1px rgba(155, 53, 255, .35);
+          transform: translateY(-2px);
+        }
+
+        .gem {
+          width: 48px;
+          height: 48px;
+          margin-bottom: 13px;
+          display: grid;
+          place-items: center;
+          font-size: 20px;
+          font-weight: 1000;
+          color: #fff;
+          background: linear-gradient(135deg, #d7a1ff, #7f22ff 55%, #3e0d8d);
+          clip-path: polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%);
+          border: 3px solid rgba(255,255,255,.18);
+          box-shadow: 0 0 18px rgba(155, 53, 255, .8), inset 0 0 13px rgba(0,0,0,.35);
+        }
+
+        .price strong {
+          font-size: 14px;
+          font-weight: 1000;
+        }
+
+        .price small {
+          display: block;
+          margin-top: 5px;
+          color: var(--purple3);
+          font-size: 13px;
+          font-weight: 1000;
+        }
+
+        .summary {
+          margin-top: 24px;
+          display: flex;
+          justify-content: space-between;
+          color: #aaa3b8;
+          font-size: 17px;
+          font-weight: 800;
+        }
+
+        .summary b {
+          color: var(--purple3);
+          text-shadow: 0 0 14px rgba(155, 53, 255, .5);
+        }
+
+        .pay-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-top: 24px;
+          width: 100%;
+          min-height: 56px;
+          border-radius: 9px;
+          border: 1px solid var(--purple);
+          background: rgba(155, 53, 255, .08);
+          color: #fff;
+          text-decoration: none;
+          font-size: 18px;
+          font-weight: 1000;
+          box-shadow: inset 0 0 22px rgba(155, 53, 255, .10);
+          transition: .2s;
+        }
+
+        .pay-btn:hover {
+          background: linear-gradient(180deg, #9b35ff, #5e14d1);
+          box-shadow: 0 0 30px rgba(155, 53, 255, .45);
+          transform: translateY(-2px);
+        }
+
+        .pay-icon {
+          color: var(--purple3);
+          font-size: 25px;
+        }
+
+        .pay-btn:hover .pay-icon { color: #fff; }
+
+        .safe {
+          text-align: center;
+          margin-top: 13px;
+          color: #898393;
+          font-size: 13px;
+        }
+
+        .recent {
+          margin-top: 26px;
+        }
+
+        .section-head {
+          display: inline-block;
+          padding: 12px 20px;
+          border: 1px solid rgba(255,255,255,.10);
+          border-bottom: 0;
+          border-radius: 10px 10px 0 0;
+          background: rgba(5, 6, 11, .85);
+          font-size: 20px;
+          font-weight: 1000;
+          text-shadow: 0 0 14px rgba(155, 53, 255, .38);
+        }
+
+        .recent-box {
+          border-top: 1px solid rgba(255,255,255,.12);
+          padding: 20px 10px 26px;
+          display: grid;
+          grid-template-columns: repeat(10, 1fr);
+          gap: 14px;
+        }
+
+        .buyer {
+          min-height: 98px;
+          border: 1px solid rgba(255,255,255,.10);
+          border-radius: 10px;
+          background: rgba(0,0,0,.25);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
+          transition: .2s;
+        }
+
+        .buyer:hover {
+          border-color: rgba(155, 53, 255, .65);
+          transform: translateY(-2px);
+        }
+
+        .avatar {
+          width: 34px;
+          height: 34px;
+          border-radius: 6px;
+          background: linear-gradient(135deg, #2b2d38, #7e22ce);
+          box-shadow: inset -8px -6px rgba(0,0,0,.25);
+        }
+
+        .buyer strong {
+          font-size: 12px;
+        }
+
+        .buyer span {
+          color: #91899f;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        footer {
+          margin-top: 4px;
+          border-top: 1px solid rgba(255,255,255,.10);
+          padding: 42px 0 34px;
+          display: grid;
+          grid-template-columns: 1.4fr .8fr .8fr 1fr;
+          gap: 40px;
+          color: #8f8899;
+        }
+
+        footer h3,
+        footer h4 {
+          color: #fff;
+          margin-bottom: 15px;
+          font-weight: 1000;
+        }
+
+        footer .brand {
+          font-size: 27px;
+          line-height: .85;
+          color: #fff;
+          text-shadow: 0 0 16px rgba(155, 53, 255, .55);
+        }
+
+        footer .brand b { color: var(--purple); }
+        footer .brand span {
+          display: block;
+          color: var(--purple3);
+          font-size: 14px;
+          margin-left: 34px;
+        }
+
+        footer p {
+          margin-top: 14px;
+          line-height: 1.6;
+          font-size: 14px;
+        }
+
+        footer a {
+          display: block;
+          color: #aaa3b8;
+          text-decoration: none;
+          margin: 12px 0;
+          font-weight: 700;
+          font-size: 14px;
+        }
+
+        footer a:hover { color: var(--purple3); }
+
+        .tipply {
+          color: var(--purple3);
+          font-size: 30px;
+          font-weight: 1000;
+          text-shadow: 0 0 18px rgba(155, 53, 255, .5);
+        }
+
+        .copyright {
+          border-top: 1px solid rgba(255,255,255,.08);
+          padding: 18px 0 30px;
+          text-align: center;
+          color: #777180;
+          font-size: 13px;
+        }
+
+        @media (max-width: 1050px) {
+          .hero { grid-template-columns: 1fr; }
+          .recent-box { grid-template-columns: repeat(5, 1fr); }
+          footer { grid-template-columns: 1fr 1fr; }
+          header { height: auto; padding: 22px 0; flex-wrap: wrap; gap: 20px; }
+          nav { order: 3; width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 680px) {
+          .header-actions { width: 100%; flex-direction: column; align-items: stretch; }
+          .online-pill, .login-btn { justify-content: center; text-align: center; }
+          nav { gap: 18px; }
+          .promo h1 { font-size: 42px; }
+          .promo p { font-size: 15px; }
+          .prices { grid-template-columns: 1fr 1fr; }
+          .recent-box { grid-template-columns: repeat(2, 1fr); }
+          footer { grid-template-columns: 1fr; }
+          .promo { padding: 24px; }
+          .copy-btn { width: 100%; padding: 18px 20px; }
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes softGlow {
+          from {
+            box-shadow: 0 25px 80px rgba(0,0,0,.50), inset 0 0 35px rgba(155, 53, 255, .04);
+          }
+          to {
+            box-shadow: 0 25px 90px rgba(0,0,0,.55), 0 0 32px rgba(155, 53, 255, .16), inset 0 0 45px rgba(155, 53, 255, .09);
+          }
+        }
+
+        @keyframes floatSlow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        header {
+          animation: fadeUp .7s ease both;
+        }
+
+        .promo {
+          animation: fadeUp .85s ease .08s both, softGlow 3s ease-in-out infinite alternate;
+        }
+
+        .topup {
+          animation: fadeUp .85s ease .18s both, softGlow 3s ease-in-out infinite alternate;
+        }
+
+        .recent {
+          animation: fadeUp .85s ease .28s both;
+        }
+
+        footer {
+          animation: fadeUp .85s ease .35s both;
+        }
+
+        .mc-skin {
+          animation: floatSlow 3.5s ease-in-out infinite;
+        }
+
+        .price,
+        .buyer,
+        .copy-btn,
+        .pay-btn,
+        .login-btn,
+        nav a {
+          transition: all .28s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .price:active,
+        .copy-btn:active,
+        .pay-btn:active,
+        .login-btn:active {
+          transform: scale(.96);
+        }
+
+        .gem {
+          transition: transform .28s cubic-bezier(.2,.8,.2,1), filter .28s ease;
+        }
+
+        .price:hover .gem,
+        .price.active .gem {
+          transform: rotate(-6deg) scale(1.08);
+          filter: brightness(1.15);
+        }
+
+        .particles {
+          position: fixed;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .particles span {
+          position: absolute;
+          left: var(--x);
+          bottom: -40px;
+          width: var(--s);
+          height: var(--s);
+          border-radius: 50%;
+          background: var(--purple3);
+          box-shadow: 0 0 12px var(--purple), 0 0 28px var(--purple2);
+          animation: particleFloat 8s linear infinite;
+          animation-delay: var(--d);
+          opacity: .75;
+        }
+
+        @keyframes particleFloat {
+          0% {
+            transform: translateY(0) translateX(0) scale(.7);
+            opacity: 0;
+          }
+          15% { opacity: .9; }
+          100% {
+            transform: translateY(-115vh) translateX(45px) scale(1.15);
+            opacity: 0;
+          }
+        }
+
+        .single-skin-showcase {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          width: 100%;
+          height: 300px;
+          margin-top: 28px;
+          margin-bottom: 10px;
+          position: relative;
+        }
+
+        .portal-ring {
+          position: absolute;
+          left: 50%;
+          bottom: 10px;
+          transform: translateX(-50%);
+          width: 250px;
+          height: 80px;
+          border-radius: 50%;
+          border: 2px solid rgba(155, 53, 255, .75);
+          box-shadow: 0 0 22px rgba(155, 53, 255, .8), inset 0 0 24px rgba(155, 53, 255, .25);
+          animation: portalPulse 2.5s ease-in-out infinite alternate;
+          z-index: 1;
+        }
+
+        @keyframes portalPulse {
+          from { opacity: .55; transform: translateX(-50%) scale(.92); }
+          to { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        .dark-skin-render {
+          position: relative;
+          z-index: 3;
+          height: 270px;
+          image-rendering: pixelated;
+          filter: brightness(.72) contrast(1.45) hue-rotate(238deg) saturate(2.4) drop-shadow(0 0 28px rgba(155, 53, 255, .9));
+          animation: floatSlow 3.4s ease-in-out infinite;
+          transition: transform .35s cubic-bezier(.2,.8,.2,1), filter .35s ease;
+        }
+
+        .single-skin-showcase:hover .dark-skin-render {
+          transform: translateY(-10px) scale(1.04);
+          filter: brightness(.82) contrast(1.55) hue-rotate(238deg) saturate(2.8) drop-shadow(0 0 38px rgba(155, 53, 255, 1));
+        }
+
+        .last-only {
+          grid-template-columns: 1fr !important;
+        }
+
+        .last-purchase {
+          min-height: 120px;
+          flex-direction: row;
+          justify-content: flex-start;
+          padding: 24px;
+        }
+
+        .last-purchase .avatar {
+          width: 48px;
+          height: 48px;
+        }
+
+        @media (max-width: 680px) {
+          .single-skin-showcase { height: 240px; }
+          .dark-skin-render { height: 215px; }
+          .portal-ring { width: 190px; height: 62px; }
+          .discord-contact { flex-direction: column; text-align: center; }
+          .discord-contact p, .discord-contact a { font-size: 16px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="particles">
+    <span style="--x:8%;--d:0s;--s:4px;"></span>
+    <span style="--x:16%;--d:1.2s;--s:6px;"></span>
+    <span style="--x:24%;--d:2.4s;--s:3px;"></span>
+    <span style="--x:35%;--d:.4s;--s:5px;"></span>
+    <span style="--x:47%;--d:1.8s;--s:4px;"></span>
+    <span style="--x:58%;--d:.9s;--s:7px;"></span>
+    <span style="--x:69%;--d:2.7s;--s:4px;"></span>
+    <span style="--x:78%;--d:1.4s;--s:6px;"></span>
+    <span style="--x:88%;--d:.2s;--s:3px;"></span>
+    <span style="--x:96%;--d:2.1s;--s:5px;"></span>
+</div>
+
+<div class="container">
+    <header>
+        <div class="logo"><b>RNG</b>CORE<span>SHOP</span></div>
+
+        <nav>
+            <a href="#" class="active">STRONA GŁÓWNA</a>
+            <a href="#regulamin">REGULAMIN</a>
+            <a href="#kontakt">KONTAKT</a>
+        </nav>
+
+        <div class="header-actions">
+            <div class="online-pill"><span class="dot"></span>276 GRACZY ONLINE</div>
+            <a class="login-btn" href="#vpln">DOŁADUJ</a>
+        </div>
+    </header>
+
+    <main class="hero">
+        <section class="card promo">
+            <div class="promo-bg"></div>
+            <div class="promo-content">
+                <div class="server-online"><span class="dot"></span>276 GRACZY ONLINE</div>
+                <h1>RNGCORE<span>.PL</span></h1>
+                <p>INNOWACYJNY SERWER MINECRAFT</p>
+
+                <div class="character single-skin-showcase">
+                    <div class="aura"></div>
+                    <div class="portal-ring"></div>
+                    <img class="dark-skin-render" src="https://mc-heads.net/body/Technoblade/230" alt="Ciemno fioletowy skin Minecraft">
+                </div>
+
+                <button class="copy-btn" onclick="copyIP()">SKOPIUJ IP ⧉</button>
+                <div class="server-ip">IP: <span>rngcore.pl</span></div>
+            </div>
+        </section>
+
+        <section class="card topup" id="vpln">
+            <div class="topup-inner">
+                <h2>DOŁADUJ SWOJE KONTO</h2>
+                <p class="sub">Wybierz kwotę doładowania vPLN</p>
+
+                <div class="prices">
+                    <div class="price active" data-price="5"><div class="gem">5</div><strong>5 vPLN</strong></div>
+                    <div class="price" data-price="10"><div class="gem">10</div><strong>10 vPLN</strong></div>
+                    <div class="price" data-price="20"><div class="gem">20</div><strong>20 vPLN</strong></div>
+                    <div class="price" data-price="50"><div class="gem">50</div><strong>50 vPLN</strong><small>+5% GRATIS</small></div>
+                    <div class="price" data-price="100"><div class="gem">100</div><strong>100 vPLN</strong><small>+10% GRATIS</small></div>
+                    <div class="price" data-price="200"><div class="gem">200</div><strong>200 vPLN</strong><small>+15% GRATIS</small></div>
+                </div>
+
+                <div class="summary">
+                    <span>Do zapłaty:</span>
+                    <b id="priceText">5.00 PLN</b>
+                </div>
+
+                <a class="pay-btn" id="payBtn" href="https://tipply.pl/@oskareqs" target="_blank">
+                    <span class="pay-icon">↯</span> ZAPŁAĆ PRZEZ TIPPLY
+                </a>
+                <p class="safe">Bezpieczne płatności obsługiwane przez Tipply. W wiadomości wpisz nick Minecraft.</p>
+            </div>
+        </section>
+    </main>
+
+    <section class="recent">
+        <h3 class="section-head">OSTATNI ZAKUP</h3>
+        <div class="recent-box last-only">
+            <div class="buyer last-purchase">
+                <div class="avatar"></div>
+                <strong>Brak ostatniego zakupu</strong>
+                <span>Po pierwszej płatności pojawi się tutaj nick gracza i kwota vPLN</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="regulamin" class="card" style="margin-top:40px;padding:40px;line-height:1.8;animation:fadeUp .85s ease .32s both;">
+        <h2 style="font-size:38px;font-weight:1000;margin-bottom:25px;text-shadow:0 0 20px rgba(155,53,255,.45);">REGULAMIN SKLEPU INTERNETOWEGO RNGCORE</h2>
+
+        <h3 style="color:var(--purple3);margin-top:20px;">§1 Postanowienia ogólne</h3>
+        <p>
+            Sklep internetowy RNGCORE służy do zakupu usług cyfrowych oraz przedmiotów na serwerze Minecraft RNGCORE.<br>
+            Dokonanie zakupu oznacza akceptację niniejszego regulaminu.<br>
+            Wszystkie produkty dostępne w sklepie są produktami wirtualnymi i nie podlegają wysyłce fizycznej.<br>
+            Administracja zastrzega sobie prawo do zmiany regulaminu w dowolnym momencie.
+        </p>
+
+        <h3 style="color:var(--purple3);margin-top:28px;">§2 Zakupy i płatności</h3>
+        <p>
+            Płatności realizowane są za pomocą serwisu Tipply.<br>
+            Po poprawnym opłaceniu zamówienia zakup zostaje automatycznie lub ręcznie przypisany do konta gracza.<br>
+            Czas realizacji zamówienia może wynosić do 24 godzin.<br>
+            W przypadku problemów z realizacją należy skontaktować się z administracją serwera.<br>
+            Kupujący odpowiada za poprawne wpisanie swojego nicku Minecraft podczas zakupu.
+        </p>
+
+        <h3 style="color:var(--purple3);margin-top:28px;">§3 Zwroty i reklamacje</h3>
+        <p>
+            Zakupione produkty cyfrowe nie podlegają zwrotowi po ich dostarczeniu.<br>
+            Reklamacje można zgłaszać poprzez Discord serwera lub support.<br>
+            Administracja ma prawo odmówić zwrotu środków w przypadku:<br>
+            — złamania regulaminu serwera,<br>
+            — prób oszustwa,<br>
+            — chargebacków lub cofnięcia płatności.<br>
+            Próba wyłudzenia produktów skutkuje permanentną blokadą konta.
+        </p>
+
+        <h3 style="color:var(--purple3);margin-top:28px;">§4 Rangi i przedmioty</h3>
+        <p>
+            Zakupione rangi, pety, gamepassy oraz inne przedmioty są przypisywane wyłącznie na serwerze RNGCORE.<br>
+            Administracja może balansować lub zmieniać działanie zakupionych przedmiotów w celu zachowania balansu gry.<br>
+            Zakup produktu nie daje przewagi administracyjnej ani prawa do specjalnego traktowania.
+        </p>
+
+        <h3 style="color:var(--purple3);margin-top:28px;">§5 Kary i blokady</h3>
+        <p>
+            Złamanie regulaminu serwera może skutkować utratą zakupionych produktów bez możliwości zwrotu pieniędzy.<br>
+            Administracja ma prawo odebrać produkt zdobyty w sposób nieuczciwy.<br>
+            Udostępnianie kont lub wykorzystywanie błędów sklepu jest zabronione.
+        </p>
+
+        <h3 style="color:var(--purple3);margin-top:28px;">§6 Dane i bezpieczeństwo</h3>
+        <p>
+            Sklep nie przechowuje danych kart płatniczych użytkowników.<br>
+            Dane wykorzystywane są wyłącznie do realizacji płatności i usług serwera.<br>
+            Administracja dokłada starań, aby sklep działał w sposób bezpieczny i stabilny.
+        </p>
+    </section>
+
+    <footer id="kontakt">
+        <div>
+            <div class="brand"><b>RNG</b>CORE<span>SHOP</span></div>
+            <p>Innowacyjny serwer Minecraft. Doładuj konto i kupuj rangi, klucze oraz dodatki na serwerze.</p>
+        </div>
+
+        <div>
+            <h4>LINKI</h4>
+            <a href="#">Strona główna</a>
+            <a href="#regulamin">Regulamin</a>
+            <a href="#kontakt">Kontakt</a>
+        </div>
+
+        <div>
+            <h4>INFORMACJE</h4>
+            <p><span class="dot" style="display:inline-block;width:9px;height:9px"></span> 276 graczy online<br>IP: rngcore.pl<br>Wersja: 1.21.1<br>Status: <span style="color:var(--green)">Online</span></p>
+        </div>
+
+        <div>
+            <h4>PŁATNOŚCI</h4>
+            <p>Płatności obsługiwane przez Tipply</p>
+            <div class="tipply">↯ tipply</div>
+            <p>Bezpieczne i szybkie płatności</p>
+        </div>
+    </footer>
+
+    <section class="discord-contact" id="kontakt-discord">
+        <div class="discord-icon">☯</div>
+        <p>Jeśli boisz się zakupić przez stronę, zapraszamy na nasz server discord :</p>
+        <a href="https://discord.gg/huX8KyfsTe" target="_blank">https://discord.gg/huX8KyfsTe</a>
+    </section>
+
+    <div class="copyright" id="regulamin">© 2026 RNGCORE.PL - Wszelkie prawa zastrzeżone.</div>
+</div>
+
+<script>
+    const prices = document.querySelectorAll('.price');
+    const priceText = document.getElementById('priceText');
+    const payBtn = document.getElementById('payBtn');
+
+    prices.forEach(price => {
+      price.addEventListener('click', () => {
+        prices.forEach(p => p.classList.remove('active'));
+        price.classList.add('active');
+
+        const value = Number(price.dataset.price);
+        priceText.textContent = value.toFixed(2) + ' PLN';
+        payBtn.href = 'https://tipply.pl/@oskareqs';
+      });
+    });
+
+    function copyIP() {
+      const ip = 'rngcore.pl';
+      navigator.clipboard.writeText(ip).then(() => {
+        alert('Skopiowano IP: ' + ip);
+      }).catch(() => {
+        alert('IP serwera: ' + ip);
+      });
+    }
+</script>
+</body>
+</html>
